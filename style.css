@@ -29,7 +29,13 @@ body {
 }
 
 .controls {
-    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* gap: 30px; */
+    margin-right: 10px;
+    width: 200px;
 }
 
 #gridSize {
@@ -38,7 +44,18 @@ body {
 }
 
 #gridSizeDisplay {
-    font-size: 20px;
+    font-size: 22px;
+}
+
+button {
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+button,
+input {
+    width: 100%;
+    cursor: pointer;
 }
 
 
@@ -50,14 +67,11 @@ body {
 }
 
 @media (max-width: 850px) {
-    .controls {
-        gap: 50px;
-    }
+    
 
     #gridSizeDisplay {
-        width: 150px;
         gap: 16px;
-        margin-bottom: ;
+        /* margin-bottom: ; */
     }
 
     #gridSize {
@@ -76,13 +90,19 @@ body {
         flex-direction: column-reverse;
     }
 
-    /* get the input */
-    #gridSize {
-        margin-bottom: -50px;
+    .controls {
+        gap: 16px;
+        margin-top: 15px;
     }
 
+    /* get the input */
+    #gridSize {
+        margin-top: 5px;
+    }
+
+
     #gridSizeDisplay {
-        margin-bottom: -15px;
+        margin: 0px;
     }
 
     .container {

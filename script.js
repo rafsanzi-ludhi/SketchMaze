@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetButton = document.getElementById('resetButton');
     const gridSize = document.getElementById('gridSize');
     const gridSizeDisplay = document.getElementById('gridSizeDisplay');
+    const colorPicker = document.getElementById('colorPicker');
+
 
 
     function createGrid(size) {
