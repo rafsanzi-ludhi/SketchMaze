@@ -1,19 +1,45 @@
-document.addEventListener('DOMContentLoaded', () => { // When the DOM is loaded
-    const container = document.querySelector('.container'); // Select the container
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.querySelector('.container');
     const resetButton = document.getElementById('resetButton');
     const gridSize = document.getElementById('gridSize');
-
-    for (let i = 0; i < 256; i++) { // Create 256 divs with the class 'squares'
-        const squares = document.createElement('div'); // Create a div
-        squares.classList.add('squares'); // Add the class 'squares' to the div
-
-        // Add mouseover event listener to each box
-        squares.addEventListener('mouseover', () => {
-            // add a class to the div for black color
-            squares.classList.add('black');
-        });
+    const gridSizeDisplay = document.getElementById('gridSizeDisplay');
 
 
-        container.appendChild(squares); // Append the div to the container
+    function createGrid(size) {
+        // Remove existing squares
+        while (container.firstChild) {
+            container.firstChild.remove();
+        }
+
+        // Update the CSS grid
+        container.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+        container.style.gridTemplateRows = `repeat(${size}, 1fr)`;
+
+        // Create new squares
+        for (let i = 0; i < size * size; i++) {
+            const squares = document.createElement('div'); // Create a div element
+            squares.classList.add('squares'); // Add the squares class to the div element
+
+            squares.addEventListener('mouseover', () => {
+                squares.classList.add('black');
+            });
+
+            container.appendChild(squares);
+        }
     }
+
+    // Update the display whenever the slider value changes
+    gridSize.addEventListener('input', () => {
+        gridSizeDisplay.textContent = `${gridSize.value} x ${gridSize.value}`;
+    });
+
+
+    // Initialize the grid with 16x16 squares
+    createGrid(16);
+
+    // When the reset button is clicked, recreate the grid with the slider value
+    resetButton.addEventListener('click', () => {
+        let size = gridSize.value;
+        createGrid(size);
+    });
 });

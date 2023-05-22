@@ -27,3 +27,66 @@ body {
 .black {
     background-color: #000000;
 }
+
+.controls {
+    margin-right: 20px;
+}
+
+#gridSize {
+    width: 200px;
+    margin-right: 5px;
+}
+
+#gridSizeDisplay {
+    font-size: 20px;
+}
+
+
+/* Styles for screens smaller than 600px (like mobiles) */
+@media (max-width: 1200px) {
+    .controls {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 850px) {
+    .controls {
+        gap: 50px;
+    }
+
+    #gridSizeDisplay {
+        width: 150px;
+        gap: 16px;
+        margin-bottom: ;
+    }
+
+    #gridSize {
+        margin-bottom: -4px;
+    }
+
+    .container {
+        width: 400px;
+        height: 400px;
+    }
+}
+
+@media (max-width: 650px) {
+    body {
+        font-size: 50px;
+        flex-direction: column-reverse;
+    }
+
+    /* get the input */
+    #gridSize {
+        margin-bottom: -50px;
+    }
+
+    #gridSizeDisplay {
+        margin-bottom: -15px;
+    }
+
+    .container {
+        width: 300px;
+        height: 300px;
+    }
+}
