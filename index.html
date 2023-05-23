@@ -8,16 +8,30 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="controls">
-        <input type="color" id="colorPicker" value="#000000"> <!-- Color Picker -->
-        <input type="range" min="1" max="64" value="16" class="slider" id="gridSize">
-        <p id="gridSizeDisplay">16 x 16</p>
-        <button id="resetButton">Reset Grid</button>
-    </div>
-
+    <h1>SketchMaze</h1>
     <div class="container"> 
         <!-- Making the 16 by 16 boxes in javascript to fill in here -->
     </div>
+    <div class="controls">
+        <div class="colorControls">
+            <div class="colorPickerContainer">
+                <input type="color" id="colorPicker" value="#000000"><!-- Color Picker -->
+                <p>Pen Color</p>
+            </div>
+            <div class="bckGroundColorContainer">
+                <input type="color" id="bckGroundColorPicker" value="#ffffff"> <!-- Color picker -->
+                <p>Background Color</p>
+        </div>
+        </div>
+        <div class="center-controls">
+            <input type="range" min="1" max="64" value="16" class="slider" id="gridSize">
+            <p id="gridSizeDisplay">16 x 16</p>
+            <button id="resetButton">Reset Grid</button>
+        </div>
+    </div>
+
+
+    
 </body>
 <script src="script.js"></script>
 </html>

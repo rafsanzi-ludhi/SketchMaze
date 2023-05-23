@@ -1,20 +1,27 @@
 body {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
+    flex-direction: column;
     min-height: 100vh;
     margin: 0;
     background-color: #f0f0f0;
+    /* padding to bottom */
+}
+
+h1 {
+    font-size: 80px;
+    margin-bottom: 10px;
 }
 
 .container {
     display: grid;
     grid-template-columns: repeat(16, 1fr);
     grid-template-rows: repeat(16, 1fr);
-    grid-gap: 2px;
+    grid-gap: 1px;
     width: 500px;
     height: 500px;
-    background-color: #ffffff;
+    background-color: #181313;
     border: 1px solid #000000;
 }
 
@@ -35,7 +42,29 @@ body {
     justify-content: center;
     /* gap: 30px; */
     margin-right: 10px;
+    margin-top: 20px;
     width: 200px;
+}
+
+.colorPickerContainer,
+.bckGroundColorContainer {
+    display: flex;
+    justify-content: flex-start;
+    /* Align items to the left */
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.colorControls {
+    align-self: flex-start;
+}
+
+.center-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 #gridSize {
@@ -45,6 +74,14 @@ body {
 
 #gridSizeDisplay {
     font-size: 22px;
+}
+
+#colorPicker,
+#bckGroundColorPicker {
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
 }
 
 button {
@@ -64,6 +101,8 @@ input {
     .controls {
         justify-content: center;
     }
+
+    
 }
 
 @media (max-width: 850px) {
@@ -87,7 +126,11 @@ input {
 @media (max-width: 650px) {
     body {
         font-size: 50px;
-        flex-direction: column-reverse;
+        flex-direction: column;
+    }
+
+    h1 {
+        font-size: 50px;
     }
 
     .controls {
