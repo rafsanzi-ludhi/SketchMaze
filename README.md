@@ -1,6 +1,7 @@
 # Etch-A-Sketch Game
 Play here: (https://rafsanzi-ludhi.github.io/SketchMaze/)
 
+
 Welcome to my digital version of the classic Etch-A-Sketch game! This project allowed me to explore and strengthen my understanding of several key web development concept
 
 ## Introduction
