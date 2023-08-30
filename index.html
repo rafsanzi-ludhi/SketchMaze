@@ -1,37 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SketchMaze</title>
+    <title>Sketchpad</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <h1>SketchMaze</h1>
-    <div class="container"> 
-        <!-- Making the 16 by 16 boxes in javascript to fill in here -->
-    </div>
-    <div class="controls">
-        <div class="colorControls">
-            <div class="colorPickerContainer">
-                <input type="color" id="colorPicker" value="#000000"><!-- Color Picker -->
-                <p>Pen Color</p>
+
+    <header>
+        <h1>Sketchpad</h1>
+    </header>
+
+    <div id="grid-container"></div>
+
+    <div class="controls-container">
+        <div class="slider-container">
+            <label for="gridSize"><span id="gridSizeValue">16</span>x<span id="gridSizeValue2">16</span></label>
+            <input type="range" id="gridSize" min="1" max="50" value="16">
+        </div>
+
+        <div class="color-picker-wrapper">
+            <div class="color-picker-container">
+                <input type="color" id="penColor" value="#000000">
+                <label for="penColor">pen colour</label>
             </div>
-            <div class="bckGroundColorContainer">
-                <input type="color" id="bckGroundColorPicker" value="#ffffff"> <!-- Color picker -->
-                <p>Background Color</p>
+            <div class="color-picker-container">
+                <input type="color" id="backgroundColor" value="#ffffff">
+                <label for="backgroundColor">background colour</label>
+            </div>
         </div>
+
+        <div class="control-buttons">
+            <button id="undoButton">undo</button>
+            <button id="redoButton">redo</button>
         </div>
-        <div class="center-controls">
-            <input type="range" min="1" max="64" value="16" class="slider" id="gridSize">
-            <p id="gridSizeDisplay">16 x 16</p>
-            <button id="resetButton">Reset Grid</button>
-        </div>
+
+        <button id="resetButton">reset sketchpad</button>
     </div>
 
 
-    
 </body>
 <script src="script.js"></script>
+
 </html>
