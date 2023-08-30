@@ -4,67 +4,74 @@ document.addEventListener('DOMContentLoaded', () => {
     const gridSize = document.getElementById('gridSize');
     const gridSizeDisplay = document.getElementById('gridSizeDisplay');
     const colorPicker = document.getElementById('colorPicker');
-    const bckGroundColorPicker = document.getElementById('bckGroundColorPicker'); 
+    const bckGroundColorPicker = document.getElementById('bckGroundColorPicker'); // Get color picker
 
-    let isDrawing = false; 
-
-    function startDrawing() {
-        isDrawing = true;
-    }
-
-    function stopDrawing() {
-        isDrawing = false;
-    }
-
-    document.body.addEventListener('mousedown', startDrawing);
-    document.body.addEventListener('mouseup', stopDrawing);
-    document.body.addEventListener('touchstart', startDrawing);
-    document.body.addEventListener('touchend', stopDrawing);
+    let mouseDown = false; // Track the state of the mouse button
+    document.body.onmousedown = () => (mouseDown = true)
+    document.body.onmouseup = () => (mouseDown = false)
 
     function createGrid(size) {
+        // Remove existing squares
         while (container.firstChild) {
             container.firstChild.remove();
         }
 
+        // Update the CSS grid
         container.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
         container.style.gridTemplateRows = `repeat(${size}, 1fr)`;
 
+        // Create new squares
         for (let i = 0; i < size * size; i++) {
-            const squares = document.createElement('div');
-            squares.classList.add('squares');
-            squares.style.backgroundColor = bckGroundColorPicker.value;
+            const squares = document.createElement('div'); // Create a div element
+            squares.classList.add('squares'); // Add the squares class to the div element
+            squares.style.backgroundColor = bckGroundColorPicker.value; // Set the background color of the div element
 
+            // Add event listener to change the color of the square when the mouse is over it
             squares.addEventListener('mouseover', () => {
-                if (isDrawing) {
+                if (mouseDown) { // Add the color only if the mouse is being pressed
                     squares.style.backgroundColor = colorPicker.value;
                 }
             });
 
-            squares.addEventListener('touchmove', (e) => {
-                if (isDrawing) {
-                    // Get the element that the touch is currently over
-                    const touchElement = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY);
-                    if (touchElement && touchElement.classList.contains('squares')) {
-                        touchElement.style.backgroundColor = colorPicker.value;
-                    }
-                }
-                e.preventDefault(); // Prevent page scrolling
-            });
-
+            // Prevent dragging of the squares when trying to draw that causes it to lag
             squares.addEventListener('mousedown', (e) => {
                 e.preventDefault();
             });
 
+                // Event to handle starting a drawing for touch devices
+                        cell.addEventListener('touchstart', function(event) {
+                        event.preventDefault(); // prevent scroll or other default actions
+                        isMousePressed = true;
+                        event.target.style.backgroundColor = currentPenColor;
+                        event.target.setAttribute('painted', true);
+                        drawingSession = true;
+                        });
+
+            // touch event listener
+            squares.addEventListener('touchmove', function (event) {
+                event.preventDefault();
+                let touch = event.touches[0];
+                let target = document.elementFromPoint(touch.clientX, touch.clientY);
+                if (isMousePressed && target&& target.classList.contains('grid-cell')) {
+                    target.style.backgroundColor = currentPenColor;
+                  target.setAttribute('painted', true);
+                }
+                     });
+        
+
+            // Add the div element to the container
             container.appendChild(squares);
         }
     }
 
+    // Update the display whenever the slider value changes
     gridSize.addEventListener('input', () => {
         gridSizeDisplay.textContent = `${gridSize.value} x ${gridSize.value}`;
         let size = gridSize.value;
         createGrid(size);
     });
 
+    // Change the background color of all squares when the color picker value changes
     bckGroundColorPicker.addEventListener('change', () => {
         const squares = document.querySelectorAll('.squares');
         squares.forEach((square) => {
@@ -72,8 +79,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    createGrid(16);
 
+            // Events to handle end of drawing session for touch devices.
+        document.addEventListener('touchend', function() {
+            isMousePressed = false;
+            if (drawingSession) {
+                drawingSession = false;
+                saveStateToHistory();
+            }
+        });
+
+    // Initialize the grid with 16x16 squares
+    createGrid(18);
+
+    // When the reset button is clicked, recreate the grid with the slider value
     resetButton.addEventListener('click', () => {
         let size = gridSize.value;
         createGrid(size);
