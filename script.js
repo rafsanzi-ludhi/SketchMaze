@@ -4,53 +4,67 @@ document.addEventListener('DOMContentLoaded', () => {
     const gridSize = document.getElementById('gridSize');
     const gridSizeDisplay = document.getElementById('gridSizeDisplay');
     const colorPicker = document.getElementById('colorPicker');
-    const bckGroundColorPicker = document.getElementById('bckGroundColorPicker'); // Get color picker
+    const bckGroundColorPicker = document.getElementById('bckGroundColorPicker'); 
 
-    let mouseDown = false; // Track the state of the mouse button
-    document.body.onmousedown = () => (mouseDown = true)
-    document.body.onmouseup = () => (mouseDown = false)
+    let isDrawing = false; 
+
+    function startDrawing() {
+        isDrawing = true;
+    }
+
+    function stopDrawing() {
+        isDrawing = false;
+    }
+
+    document.body.addEventListener('mousedown', startDrawing);
+    document.body.addEventListener('mouseup', stopDrawing);
+    document.body.addEventListener('touchstart', startDrawing);
+    document.body.addEventListener('touchend', stopDrawing);
 
     function createGrid(size) {
-        // Remove existing squares
         while (container.firstChild) {
             container.firstChild.remove();
         }
 
-        // Update the CSS grid
         container.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
         container.style.gridTemplateRows = `repeat(${size}, 1fr)`;
 
-        // Create new squares
         for (let i = 0; i < size * size; i++) {
-            const squares = document.createElement('div'); // Create a div element
-            squares.classList.add('squares'); // Add the squares class to the div element
-            squares.style.backgroundColor = bckGroundColorPicker.value; // Set the background color of the div element
+            const squares = document.createElement('div');
+            squares.classList.add('squares');
+            squares.style.backgroundColor = bckGroundColorPicker.value;
 
-            // Add event listener to change the color of the square when the mouse is over it
             squares.addEventListener('mouseover', () => {
-                if (mouseDown) { // Add the color only if the mouse is being pressed
+                if (isDrawing) {
                     squares.style.backgroundColor = colorPicker.value;
                 }
             });
 
-            // Prevent dragging of the squares when trying to draw that causes it to lag
+            squares.addEventListener('touchmove', (e) => {
+                if (isDrawing) {
+                    // Get the element that the touch is currently over
+                    const touchElement = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY);
+                    if (touchElement && touchElement.classList.contains('squares')) {
+                        touchElement.style.backgroundColor = colorPicker.value;
+                    }
+                }
+                e.preventDefault(); // Prevent page scrolling
+            });
+
             squares.addEventListener('mousedown', (e) => {
                 e.preventDefault();
             });
 
-            // Add the div element to the container
             container.appendChild(squares);
         }
     }
 
-    // Update the display whenever the slider value changes
     gridSize.addEventListener('input', () => {
         gridSizeDisplay.textContent = `${gridSize.value} x ${gridSize.value}`;
         let size = gridSize.value;
         createGrid(size);
     });
 
-    // Change the background color of all squares when the color picker value changes
     bckGroundColorPicker.addEventListener('change', () => {
         const squares = document.querySelectorAll('.squares');
         squares.forEach((square) => {
@@ -58,13 +72,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Initialize the grid with 16x16 squares
     createGrid(16);
 
-    // When the reset button is clicked, recreate the grid with the slider value
     resetButton.addEventListener('click', () => {
         let size = gridSize.value;
         createGrid(size);
     });
 });
-
