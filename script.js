@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Initialize the grid with 16x16 squares
-    createGrid(16);
+    createGrid(18);
 
     // When the reset button is clicked, recreate the grid with the slider value
     resetButton.addEventListener('click', () => {
